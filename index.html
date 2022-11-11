@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- Mirrored from animalswithinanimals.com/generator/youtubefilter.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Nov 2022 06:27:17 GMT -->
+<head>
+       
+        <title>HTML5 youtube filter by stAllio!</title>
+        <meta name="description" content="Filter youtube, vimeo, and other streaming videos live while you watch!"></meta>
+        
+        <script type="text/javascript">
+
+
+function multiFilter(id1,hueVar,invVar,blurVar,satVar,briVar,conVar) {
+    
+    var hueAmount = document.getElementById(hueVar).value;
+    var invAmount = document.getElementById(invVar).value;
+    var blurAmount = document.getElementById(blurVar).value;
+    var satAmount = document.getElementById(satVar).value;
+    var briAmount = document.getElementById(briVar).value;
+    var conAmount = document.getElementById(conVar).value;
+    
+    
+    document.getElementById(id1).setAttribute("style","filter: hue-rotate(" + hueAmount + "deg) invert(" + invAmount + ") blur(" + blurAmount + "px) saturate(" + satAmount + ") brightness(" + briAmount + ") contrast(" + conAmount + "); -webkit-filter: hue-rotate(" + hueAmount + "deg) invert(" + invAmount + ") blur(" + blurAmount + "px) saturate(" + satAmount + ") brightness(" + briAmount + ") contrast(" + conAmount + "); -moz-filter: hue-rotate(" + hueAmount + "deg) invert(" + invAmount + ") blur(" + blurAmount + "px) saturate(" + satAmount + ") brightness(" + briAmount + ") contrast(" + conAmount + "); -o-filter: hue-rotate(" + hueAmount + "deg) invert(" + invAmount + ") blur(" + blurAmount + "px) saturate(" + satAmount + ") brightness(" + briAmount + "); -ms-filter: hue-rotate(" + hueAmount + "deg) invert(" + invAmount + ") blur(" + blurAmount + "px) saturate(" + satAmount + ") brightness(" + briAmount + ") contrast(" + conAmount + "); text-align:center;");
+
+}
+
+
+function chooseVideoSite() {
+    var videochoice = document.getElementById('videochooser').value;
+    var tuber = document.getElementById('tube');
+    
+    if (videochoice == 'youtube') {
+        document.getElementById('youtubebox').style.display = 'inline';
+        document.getElementById('vimeobox').style.display = 'none';
+        document.getElementById('vinebox').style.display = 'none';
+        
+        tuber.src = 'http://www.youtube.com/embed/P2gNrt9yJU8';
+        tuber.width = '640';
+        tuber.height = '480';
+    } else if (videochoice == 'vimeo') {
+        document.getElementById('youtubebox').style.display = 'none';
+        document.getElementById('vimeobox').style.display = 'inline';
+        document.getElementById('vinebox').style.display = 'none';
+        
+        tuber.src = 'http://player.vimeo.com/video/141551579';
+        tuber.width = '800';
+        tuber.height = '450';
+    } else if (videochoice == 'vine') {
+        document.getElementById('youtubebox').style.display = 'none';
+        document.getElementById('vimeobox').style.display = 'none';
+        document.getElementById('vinebox').style.display = 'inline';
+        
+        tuber.src = 'https://vine.co/v/OPq02dpidBM/embed/simple';
+        tuber.width = '600';
+        tuber.height = '600';
+    } else if (videochoice == 'yahoo') {
+        document.getElementById('youtubebox').style.display = 'none';
+        document.getElementById('vimeobox').style.display = 'none';
+        document.getElementById('vinebox').style.display = 'none';
+        document.getElementById('yahoobox').style.display = 'inline';
+        document.getElementById('dailymotionbox').style.display = 'none';
+        
+        tuber.src = 'https://screen.yahoo.com/popular/physics-popcorn-110028760.html?format=embed';
+        tuber.width = '640';
+        tuber.height = '480';
+    } else if (videochoice == 'dailymotion') {
+        document.getElementById('youtubebox').style.display = 'none';
+        document.getElementById('vimeobox').style.display = 'none';
+        document.getElementById('vinebox').style.display = 'none';
+        document.getElementById('yahoobox').style.display = 'none';
+        document.getElementById('dailymotionbox').style.display = 'inline';
+        
+        tuber.src = 'http://www.dailymotion.com/embed/video/x2cyqgq';
+        tuber.width = '720';
+        tuber.height = '405';
+    }
+}
+
+function loadYoutube(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var urlToLoad = document.getElementById(id2).value;
+    tuber.src = urlToLoad;
+}
+
+
+function loadYoutubeURL(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    var urlToLoad;
+    var idToLoad;
+    
+
+
+    if (str.slice(7,15) == 'youtu.be') {
+        idToLoad = str.slice(16, str.length);
+        urlToLoad = '//www.youtube.com/embed/' + idToLoad;
+    }
+    
+    if (str.slice(24, 29) == 'watch') {
+        idToLoad = str.slice(32, str.length);
+        if (idToLoad.match(/list/g) == 'list') {
+           idToLoad = idToLoad.replace('&', '?');
+        }
+        urlToLoad = '//www.youtube.com/embed/' + idToLoad;
+    }
+    
+    if (str.slice(21, 26) == 'watch') {
+        idToLoad = str.slice(29, str.length);
+        urlToLoad = '//www.youtube.com/embed/' + idToLoad;
+    }
+    
+    tuber.src = urlToLoad;
+}
+
+
+function loadYoutubeID(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var idToLoad = document.getElementById(id2).value;
+    var urlToLoad = '//www.youtube.com/embed/' + idToLoad;
+    tuber.src = urlToLoad;
+}
+
+
+function loadYoutubeEmbed(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    
+    
+    var tubewidthArray = str.match(/width="\S+"/g);
+    var tubeheightArray = str.match(/height="\S+"/g);
+    var urlArray = str.match(/src="\S+"/g);
+    var tubewidth = tubewidthArray.toString();
+    var tubeheight = tubeheightArray.toString();
+    var urlToLoad = urlArray.toString();
+    
+    
+    tuber.src = urlToLoad.slice(5,-1);
+    tuber.width = tubewidth.slice(7,-1);
+    tuber.height = tubeheight.slice(8,-1);
+
+}
+
+
+
+function loadVimeoURL(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    
+    var idToLoad;
+    
+    if (str.charAt(4) == 's') {
+        idToLoad = str.slice(18, str.length);
+    } else {
+        idToLoad = str.slice(17, str.length);
+    }
+    var  urlToLoad = '//player.vimeo.com/video/' + idToLoad;
+
+    
+    tuber.src = urlToLoad;
+}
+
+
+function loadVimeoID(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var idToLoad = document.getElementById(id2).value;
+    var urlToLoad = '//player.vimeo.com/video/' + idToLoad;
+    tuber.src = urlToLoad;
+}
+
+
+function loadVimeoEmbed(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    
+    
+    var tubewidthArray = str.match(/width="\S+"/g);
+    var tubeheightArray = str.match(/height="\S+"/g);
+    var urlArray = str.match(/src="\S+"/g);
+    var tubewidth = tubewidthArray.toString();
+    var tubeheight = tubeheightArray.toString();
+    var urlToLoad = urlArray.toString();
+    
+    
+    tuber.src = urlToLoad.slice(5,-1);
+    tuber.width = tubewidth.slice(7,-1);
+    tuber.height = tubeheight.slice(8,-1);
+
+}
+
+function loadVineURL(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    
+    var idToLoad = str.slice(17, str.length);
+    var urlToLoad = str + '/embed/simple';
+
+    
+    tuber.src = urlToLoad;
+}
+
+
+function loadVineID(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var idToLoad = document.getElementById(id2).value;
+    var urlToLoad = 'https://vine.co/v/' + idToLoad + '/embed/simple';
+    tuber.src = urlToLoad;
+}
+
+
+function loadVineEmbed(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    
+    
+    var tubewidthArray = str.match(/width="\S+"/g);
+    var tubeheightArray = str.match(/height="\S+"/g);
+    var urlArray = str.match(/src="\S+"/);
+    var tubewidth = tubewidthArray.toString();
+    var tubeheight = tubeheightArray.toString();
+    var urlToLoad = urlArray.toString();
+    
+    
+    tuber.src = urlToLoad.slice(5,-1);
+    tuber.width = tubewidth.slice(7,-1);
+    tuber.height = tubeheight.slice(8,-1);
+
+}
+
+
+function loadYahooURL(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    
+    
+    var urlToLoad = str + '?format=embed';
+
+    
+    tuber.src = urlToLoad;
+}
+
+
+function loadYahooEmbed(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    
+    
+    var tubewidthArray = str.match(/width='\S+'/g);
+    var tubeheightArray = str.match(/height='\S+'/g);
+    var urlArray = str.match(/src='\S+'/);
+    var tubewidth = tubewidthArray.toString();
+    var tubeheight = tubeheightArray.toString();
+    var urlToLoad = urlArray.toString();
+    
+    
+    tuber.src = urlToLoad.slice(5,-1);
+    tuber.width = tubewidth.slice(7,-1);
+    tuber.height = tubeheight.slice(8,-1);
+
+}
+
+
+function loadDailyMID(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var idToLoad = document.getElementById(id2).value;
+    var urlToLoad = '//www.dailymotion.com/embed/video/' + idToLoad;
+    tuber.src = urlToLoad;
+}
+
+
+function loadDailyMURL(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    var idArray = str.match(/video\/\S+_/);
+    var idString = idArray.toString();
+    var idToLoad = idString.slice(6,-1);
+    
+    var urlToLoad = '//www.dailymotion.com/embed/video/' + idToLoad;
+
+    
+    tuber.src = urlToLoad;
+}
+
+
+function loadDailyMEmbed(id1,id2) {
+    var tuber = document.getElementById(id1);
+    var str = document.getElementById(id2).value;
+    
+    
+    var tubewidthArray = str.match(/width="\S+"/g);
+    var tubeheightArray = str.match(/height="\S+"/g);
+    var urlArray = str.match(/src="\S+"/g);
+    var tubewidth = tubewidthArray.toString();
+    var tubeheight = tubeheightArray.toString();
+    var urlToLoad = urlArray.toString();
+    
+    
+    tuber.src = urlToLoad.slice(5,-1);
+    tuber.width = tubewidth.slice(7,-1);
+    tuber.height = tubeheight.slice(8,-1);
+
+}
+
+function loadFile(event) {
+  var selectedFile = event.target.files[0];
+  var reader = new FileReader();
+
+  var imgtag = document.getElementById("mainphoto");
+  imgtag.title = selectedFile.name;
+
+  reader.onload = function(event) {
+    imgtag.src = event.target.result;
+  };
+
+  reader.readAsDataURL(selectedFile);
+}
+
+
+
+function hideControl(controlID,linkID) {
+    document.getElementById(controlID).style.display = 'none';
+    document.getElementById(linkID).style.display = 'inline';
+}
+
+function unhideControl(controlID,linkID) {
+    document.getElementById(controlID).style.display = 'inline';
+    document.getElementById(linkID).style.display = 'none';
+}
+
+function redraw() {
+document.body.style.display='none';
+document.body.offsetHeight; // no need to store this anywhere, the reference is enough
+document.body.style.display='block';
+    
+}
+
+        </script>
+        
+        
+        <style>
+            
+            img {
+  image-rendering:optimizeSpeed;             /* Legal fallback */
+  image-rendering:-moz-crisp-edges;          /* Firefox        */
+  image-rendering:-o-crisp-edges;            /* Opera          */
+  image-rendering:-webkit-optimize-contrast; /* Safari         */
+  image-rendering:optimize-contrast;         /* CSS3 Proposed  */
+  image-rendering:crisp-edges;               /* CSS4 Proposed  */
+  image-rendering:pixelated;                 /* CSS4 Proposed  */
+  -ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
+            }
+            
+            
+            
+            
+            div output#output-text, div output#output-text2, div output#output-text3, div output#output-text4 {
+                font-size:24px;
+            }
+            .minicontrol {
+                padding: 3px 2px;
+                margin: 0px 1px;
+                background-color: rgba(50%, 50%, 50%, 0.2);
+                white-space: nowrap;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+            }
+            select {
+                
+            }
+            input[type=text] {
+                
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <form id="chooser" style="display:inline;">
+            <select id="videochooser" onchange="chooseVideoSite()">
+                <option value="youtube">Youtube</option>
+                <option value="vimeo">Vimeo</option>
+                <option value="vine">Vine</option>
+                <option value="dailymotion">DailyMotion</option>
+            </select>
+        </form>
+
+<div id="youtubebox" style="display:inline;">
+
+        <label for="embedBox">Youtube embed code:</label>
+        <input id="embedBox" type="text" />
+        <button onclick="loadYoutubeEmbed('tube','embedBox')">Go</button>
+
+
+        <label for="ytidBox">Youtube ID:</label>
+        <input id="ytidBox" type="text" />
+        <button onclick="loadYoutubeID('tube','ytidBox')">Go</button>
+
+        <label for="urlBox">Youtube URL:</label>
+        <input id="urlBox" type="text" />
+        <button onclick="loadYoutubeURL('tube','urlBox')">Go</button>
+
+</div>
+        
+<div id="vimeobox" style="display:none;">
+            
+        <label for="vimEmbedBox">Vimeo embed code:</label>
+        <input id="vimEmbedBox" type="text" />
+        <button onclick="loadVimeoEmbed('tube','vimEmbedBox')">Go</button>
+            
+            
+        <label for="vimIdBox">Vimeo ID:</label>
+        <input id="vimIdBox" type="text" />
+        <button onclick="loadVimeoID('tube','vimIdBox')">Go</button>
+       
+        <label for="vimUrlBox">Vimeo URL:</label>
+        <input id="vimUrlBox" type="text" />
+        <button onclick="loadVimeoURL('tube','vimUrlBox')">Go</button>
+            
+</div>
+
+<div id="vinebox" style="display:none;">
+    
+    <label for="vineEmbedBox">Vineo embed code:</label>
+    <input id="vineEmbedBox" type="text" />
+    <button onclick="loadVineEmbed('tube','vineEmbedBox')">Go</button>
+    
+    
+    <label for="vineIdBox">Vine ID:</label>
+    <input id="vineIdBox" type="text" />
+    <button onclick="loadVineID('tube','vineIdBox')">Go</button>
+    
+    <label for="vineUrlBox">Vine URL:</label>
+    <input id="vineUrlBox" type="text" />
+    <button onclick="loadVineURL('tube','vineUrlBox')">Go</button>
+    
+</div>
+        
+        <div id="yahoobox" style="display:none;">
+            
+            <label for="yahEmbedBox">Yahoo embed code:</label>
+            <input id="yahEmbedBox" type="text" />
+            <button onclick="loadYahooEmbed('tube','yahEmbedBox')">Go</button>
+            
+            
+            <label for="yahUrlBox">Yahoo URL:</label>
+            <input id="yahUrlBox" type="text" />
+            <button onclick="loadYahooURL('tube','yahUrlBox')">Go</button>
+            
+        </div>
+        
+        
+        <div id="dailymotionbox" style="display:none;">
+            
+            <label for="dmEmbedBox">DailyMotion embed code:</label>
+            <input id="dmEmbedBox" type="text" />
+            <button onclick="loadDailyMEmbed('tube','dmEmbedBox')">Go</button>
+            
+            <label for="dmIdBox">DailyMotion ID:</label>
+            <input id="dmIdBox" type="text" />
+            <button onclick="loadDailyMID('tube','dmIdBox')">Go</button>
+            
+            <label for="dmUrlBox">DailyMotion URL:</label>
+            <input id="dmUrlBox" type="text" />
+            <button onclick="loadDailyMURL('tube','dmUrlBox')">Go</button>
+            
+        </div>
+        
+        <br />
+
+
+
+
+        <label for="hue-rotater">Hue:</label>
+        <input id="hue-rotater" name="hue" type="range" min="-360" max="360" value="0" oninput="multiFilter('tube','hue-rotater','inverter','blurrer','saturater','brighter','contraster')"/>
+
+        <label for="inverter">Invert:</label>
+        <input id="inverter" name="invr" type="range" min="0" max="1" value="0" step=".01" oninput="multiFilter('tube','hue-rotater','inverter','blurrer','saturater','brighter','contraster')"/>
+
+        <label for="blurrer">Blur:</label>
+        <input id="blurrer" name="blrr" type="range" min="0.1" max="80" value="0.1" oninput="multiFilter('tube','hue-rotater','inverter','blurrer','saturater','brighter','contraster')"/>
+
+        <label for="saturater">Saturation:</label>
+        <input id="saturater" name="satr8" type="range" min="0" max="500" value="1" oninput="multiFilter('tube','hue-rotater','inverter','blurrer','saturater','brighter','contraster')"/>
+
+<br/>
+
+        <label for="brighter">Brightness:</label>
+        <input id="brighter" name="brite" type="range" min="0" max="3" value="1" step=".05" oninput="multiFilter('tube','hue-rotater','inverter','blurrer','saturater','brighter','contraster')"/>
+
+
+        <label for="contraster">Contrast:</label>
+        <input id="contraster" name="cont" type="range" min="0" max="5" value="1" step=".05" oninput="multiFilter('tube','hue-rotater','inverter','blurrer','saturater','brighter','contraster')"/>
+        
+
+
+        
+        
+        <br/><br/><br/>
+
+        
+        <div id="mainphoto" style="text-align:center;">
+            <iframe id="tube" width="640" height="480" src="http://www.youtube.com/embed/P2gNrt9yJU8" frameborder="0" allowfullscreen></iframe>
+            
+        </div>
+
+        
+    </body>
+
+<!-- Mirrored from animalswithinanimals.com/generator/youtubefilter.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Nov 2022 06:27:17 GMT -->
+</html>
